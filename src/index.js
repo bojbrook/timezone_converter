@@ -20,12 +20,26 @@ function getUTCOffset(timezoneName, isDST = false) {
   return result.substring(3);
 }
 
-function getCurrentTime(Offset) {
-  // const date = new Date();
-  const utc = Date.now();
-  const newDate = new Date(utc + 3600000 * Offset);
-  // const formattedTime = formatter.format(newDate);
-  return newDate.toISOString();
+function getCurrentTimeFromOffset(offset) {
+  const date = new Date();
+
+  // Get current UTC time in milliseconds
+  const utcTimeInMs = date.getTime();
+
+  // Calculate the offset time by adding the offset in milliseconds
+  const offsetTimeInMs = utcTimeInMs + 3600000 * offset;
+
+  // Create a new Date object using the offset time
+  const offsetDate = new Date(offsetTimeInMs);
+
+  return offsetDate;
+}
+
+function getCurrentTime(timezoneName, isDST = false) {
+  const offset = getUTCOffset(timezoneName, isDST);
+  console.log(timezoneName, offset);
+
+  return getCurrentTimeFromOffset(offset);
 }
 
 function getTimeZoneByContinent(continent) {
@@ -40,4 +54,5 @@ module.exports = {
   getCurrentTime,
   getUTCOffset,
   getTimeZoneByContinent,
+  getCurrentTimeFromOffset,
 };
