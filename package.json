@@ -1,6 +1,6 @@
 {
   "name": "zone_convert",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A Timezone conversion library",
   "main": "index.js",
   "author": "bojbrook",

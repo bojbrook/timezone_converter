@@ -50,9 +50,19 @@ function getTimeZoneByContinent(continent) {
   return filteredTimezones;
 }
 
+function formatTimeString(time, is24Hours = false) {
+  const hours = is24Hours ? time.getUTCHours() : time.getUTCHours() % 12 || 12; // Use UTC hours
+  const minutes = time.getUTCMinutes().toString().padStart(2, "0"); // Use UTC minutes
+  const seconds = time.getUTCSeconds().toString().padStart(2, "0"); // Use UTC seconds
+  const ampm = is24Hours ? "" : time.getUTCHours() >= 12 ? "PM" : "AM"; // Add AM/PM for 12-hour format
+
+  return `${hours}:${minutes}:${seconds} ${ampm}`.trim(); // Trim if it's 24-hour format
+}
+
 module.exports = {
   getCurrentTime,
   getUTCOffset,
   getTimeZoneByContinent,
   getCurrentTimeFromOffset,
+  formatTimeString,
 };
