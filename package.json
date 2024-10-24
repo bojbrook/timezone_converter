@@ -1,5 +1,5 @@
 {
-  "name": "zone_convert",
+  "name": "timezone_converter",
   "version": "0.0.2",
   "description": "A Timezone conversion library",
   "main": "index.js",
@@ -9,7 +9,9 @@
     "test": "jest"
   },
   "keywords": [
-    "timezone"
+    "timezone",
+    "time",
+    "conversion"
   ],
   "license": "ISC",
   "devDependencies": {
