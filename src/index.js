@@ -1,3 +1,4 @@
+"use strict";
 const TIMEZONES = require("./data/timezones");
 
 function getUTCOffset(timezoneName, isDST = false) {
@@ -27,8 +28,8 @@ function getCurrentTimeFromOffset(offset) {
 
 function getCurrentTimeFromTimezone(timezoneName, isDST = false) {
   const offset = getUTCOffset(timezoneName, isDST);
-
-  return getCurrentTimeFromOffset(offset);
+  const offsetDate = getCurrentTimeFromOffset(offset);
+  return offsetDate;
 }
 
 function getTimeZoneByContinent(continent) {
