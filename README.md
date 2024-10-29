@@ -16,7 +16,7 @@ This library provides utilities for converting between different timezones. It i
 To install the library, use the following command:
 
 ```bash
-npm install timezone_converter
+npm install zone_converter
 ```
 
 ## Usage
@@ -24,7 +24,7 @@ npm install timezone_converter
 Here is a basic example of how to use the library:
 
 ```javascript
-const { getCurrentTimeFromTimezone } = require("timezone_converter");
+const { getCurrentTimeFromTimezone } = require("zone_converter");
 
 // Convert time from UTC to EST
 const berlinTime = getCurrentTimeFromTimezone("Europe/Berlin", false);
@@ -34,7 +34,7 @@ console.log(berlinTime); // Output: 2024-10-24T15:56:24.722Z
 You can get a list of all available cities and timezones by using the following:
 
 ```javascript
-const { getAllTimezones } = require("timezone_converter");
+const { getAllTimezones } = require("zone_converter");
 
 const timezones = getAllTimezones();
 console.log(timezones); // Output: ["Europe/Berlin", "America/New_York", ...]
