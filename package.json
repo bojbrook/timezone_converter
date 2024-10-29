@@ -4,6 +4,11 @@
   "description": "A Timezone conversion library",
   "main": "index.js",
   "author": "bojbrook",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:bojbrook/zone_converter.git"
+  },
+  "homepage": "https://github.com/bojbrook/zone_converter",
   "scripts": {
     "start": "node index.js",
     "test": "jest",
