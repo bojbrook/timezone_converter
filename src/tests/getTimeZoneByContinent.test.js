@@ -1,6 +1,6 @@
-const { getTimeZoneByContinent } = require("../index");
+const { getTimeZonesByContinent } = require("../index");
 const TIMEZONES = require("../data/timezones");
-describe("getTimeZoneByContinent", () => {
+describe("getTimeZonesByContinent", () => {
   beforeAll(() => {
     // Set a fixed date for testing purposes
   });
@@ -8,45 +8,45 @@ describe("getTimeZoneByContinent", () => {
     const filteredTimezones = Object.keys(TIMEZONES[0]).filter((timezone) =>
       timezone.includes("America")
     );
-    expect(getTimeZoneByContinent("America")).toEqual(filteredTimezones);
+    expect(getTimeZonesByContinent("America")).toEqual(filteredTimezones);
   });
 
   test("returns timezones for Europe continent", () => {
     const filteredTimezones = Object.keys(TIMEZONES[0]).filter((timezone) =>
       timezone.includes("Europe")
     );
-    expect(getTimeZoneByContinent("Europe")).toEqual(filteredTimezones);
+    expect(getTimeZonesByContinent("Europe")).toEqual(filteredTimezones);
   });
 
   test("returns timezones for Asia continent", () => {
     const filteredTimezones = Object.keys(TIMEZONES[0]).filter((timezone) =>
       timezone.includes("Asia")
     );
-    expect(getTimeZoneByContinent("Asia")).toEqual(filteredTimezones);
+    expect(getTimeZonesByContinent("Asia")).toEqual(filteredTimezones);
   });
 
   test("returns timezones for Australia continent", () => {
     const filteredTimezones = Object.keys(TIMEZONES[0]).filter((timezone) =>
       timezone.includes("Australia")
     );
-    expect(getTimeZoneByContinent("Australia")).toEqual(filteredTimezones);
+    expect(getTimeZonesByContinent("Australia")).toEqual(filteredTimezones);
   });
 
   test("returns timezones for Africa continent", () => {
     const filteredTimezones = Object.keys(TIMEZONES[0]).filter((timezone) =>
       timezone.includes("Africa")
     );
-    expect(getTimeZoneByContinent("Africa")).toEqual(filteredTimezones);
+    expect(getTimeZonesByContinent("Africa")).toEqual(filteredTimezones);
   });
 
   test("returns empty array for a continent with no timezones", () => {
     const filteredTimezones = Object.keys(TIMEZONES[0]).filter((timezone) =>
       timezone.includes("Antarctica")
     );
-    expect(getTimeZoneByContinent("Antarctica")).toEqual(filteredTimezones);
+    expect(getTimeZonesByContinent("Antarctica")).toEqual(filteredTimezones);
   });
 
   test("returns empty array for an unknown continent", () => {
-    expect(getTimeZoneByContinent("Unknown")).toEqual([]);
+    expect(getTimeZonesByContinent("Unknown")).toEqual([]);
   });
 });

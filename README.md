@@ -42,15 +42,18 @@ console.log(timezones); // Output: ["Europe/Berlin", "America/New_York", ...]
 
 ## API Reference
 
-### `getCurrentTimeFromTimezone(timezone: string): string`
+### `getCurrentTimeFromTimezone(timezone: string): Date`
 
-Returns the current time in the specified timezone.
+Returns a `Date` object based on the provided timezone.
 
 - `timezone`: The timezone identifier (e.g., "Europe/Berlin").
 
-### `getTimeZones(): string[]`
+### `getUTCOffset(timezone: string, isDST: boolean): number`
 
-Returns a list of all available timezone identifiers.
+Returns the offset from UTC based on the provided timezone.
+
+- `timezone`: The timezone identifier (e.g., "Europe/Berlin").
+- `isDST`: Boolean indicating whether Daylight Saving Time is in effect.
 
 ### `getCurrentTimeFromOffset(offset: number): Date`
 
@@ -58,7 +61,7 @@ Returns a `Date` object based on the provided offset from UTC.
 
 - `offset`: The offset in hours from UTC.
 
-### `getTimeZoneByContinent(continent: string): string[]`
+### `getTimeZonesByContinent(continent: string): string[]`
 
 Returns a list of timezones in the provided continent.
 
@@ -70,13 +73,6 @@ Returns a formatted string of a `Date` object.
 
 - `time`: The `Date` object to format.
 - `is24Hours`: Boolean indicating whether to use 24-hour format.
-
-### `getUTCOffset(timezone: string, isDST: boolean): number`
-
-Returns the offset from UTC based on the provided timezone.
-
-- `timezone`: The timezone identifier (e.g., "Europe/Berlin").
-- `isDST`: Boolean indicating whether Daylight Saving Time is in effect.
 
 ## License
 
