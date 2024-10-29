@@ -32,7 +32,7 @@ function getCurrentTimeFromTimezone(timezoneName, isDST = false) {
   return offsetDate;
 }
 
-function getTimeZoneByContinent(continent) {
+function getTimeZonesByContinent(continent) {
   const timezones = TIMEZONES[0];
 
   const filteredTimezones = Object.keys(timezones).filter((timezone) =>
@@ -57,7 +57,7 @@ function getTimeZones() {
 module.exports = {
   getCurrentTimeFromTimezone,
   getUTCOffset,
-  getTimeZoneByContinent,
+  getTimeZonesByContinent,
   getCurrentTimeFromOffset,
   formatTimeString,
   getTimeZones,
