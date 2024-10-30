@@ -4,6 +4,12 @@
   "description": "A Timezone conversion library",
   "main": "index.js",
   "author": "bojbrook",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://opensource.org/license/mit"
+    }
+  ],
   "scripts": {
     "start": "node index.js",
     "test": "jest",
