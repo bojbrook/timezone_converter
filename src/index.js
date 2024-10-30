@@ -2,7 +2,7 @@
 const TIMEZONES = require("./data/timezones");
 
 function getUTCOffset(timezoneName, isDST = false) {
-  const timezone = TIMEZONES[0][timezoneName];
+  const timezone = TIMEZONES[timezoneName];
   if (!timezone) {
     return "Timezone not found";
   }
@@ -33,7 +33,7 @@ function getCurrentTimeFromTimezone(timezoneName, isDST = false) {
 }
 
 function getTimeZonesByContinent(continent) {
-  const timezones = TIMEZONES[0];
+  const timezones = TIMEZONES;
 
   const filteredTimezones = Object.keys(timezones).filter((timezone) =>
     timezone.includes(continent)
@@ -51,7 +51,39 @@ function formatTimeString(time, is24Hours = false) {
 }
 
 function getTimeZones() {
-  return Object.keys(TIMEZONES[0]);
+  return Object.keys(TIMEZONES);
+}
+
+function getOffsetFromDate(date, timeZone) {
+  const options = { timeZone, timeZoneName: "short" };
+  const parts = date.toLocaleString("en-US", options).split(" ");
+  const offsetStr = parts[parts.length - 1]; // Last part is the offset
+
+  // Convert the timezone offset to an integer (e.g., "GMT-4" => -4, "GMT+1" => 1)
+  const offset = parseInt(offsetStr.replace("GMT", ""), 10);
+  return offset;
+}
+
+function isDST(timeZone) {
+  const isSouthernHemisphere = TIMEZONES[timeZone].hemisphere === "Southern";
+
+  const currentDate = new Date();
+  const januaryOffset = getOffsetFromDate(
+    new Date(currentDate.getFullYear(), 0, 1),
+    timeZone
+  );
+  const julyOffset = getOffsetFromDate(
+    new Date(currentDate.getFullYear(), 6, 1),
+    timeZone
+  );
+
+  const currentOffset = getOffsetFromDate(currentDate, timeZone);
+
+  if (!isSouthernHemisphere) {
+    return currentOffset !== januaryOffset && currentOffset !== julyOffset;
+  } else {
+    return currentOffset === januaryOffset || currentOffset === julyOffset;
+  }
 }
 
 module.exports = {
@@ -61,4 +93,5 @@ module.exports = {
   getCurrentTimeFromOffset,
   formatTimeString,
   getTimeZones,
+  isDST,
 };
