@@ -55,7 +55,7 @@ function getTimeZones() {
 }
 
 function getOffsetFromDate(date, timeZone) {
-  const options = { timeZone, timeZoneName: "short" };
+  const options = { timeZone, timeZoneName: "shortOffset" };
   const parts = date.toLocaleString("en-US", options).split(" ");
   const offsetStr = parts[parts.length - 1]; // Last part is the offset
 
@@ -66,12 +66,13 @@ function getOffsetFromDate(date, timeZone) {
 
 function isDST(timeZone) {
   const isSouthernHemisphere = TIMEZONES[timeZone].hemisphere === "Southern";
-
   const currentDate = new Date();
+
   const januaryOffset = getOffsetFromDate(
     new Date(currentDate.getFullYear(), 0, 1),
     timeZone
   );
+
   const julyOffset = getOffsetFromDate(
     new Date(currentDate.getFullYear(), 6, 1),
     timeZone
@@ -79,10 +80,10 @@ function isDST(timeZone) {
 
   const currentOffset = getOffsetFromDate(currentDate, timeZone);
 
-  if (!isSouthernHemisphere) {
-    return currentOffset !== januaryOffset && currentOffset !== julyOffset;
+  if (isSouthernHemisphere) {
+    return currentOffset === januaryOffset;
   } else {
-    return currentOffset === januaryOffset || currentOffset === julyOffset;
+    return currentOffset === julyOffset;
   }
 }
 
