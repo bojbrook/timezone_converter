@@ -1,9 +1,14 @@
 {
   "name": "zone_converter",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A Timezone conversion library",
   "main": "index.js",
   "author": "bojbrook",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:bojbrook/zone_converter.git"
+  },
+  "homepage": "https://github.com/bojbrook/zone_converter",
   "licenses": [
     {
       "type": "MIT",
