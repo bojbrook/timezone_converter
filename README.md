@@ -74,6 +74,12 @@ Returns a formatted string of a `Date` object.
 - `time`: The `Date` object to format.
 - `is24Hours`: Boolean indicating whether to use 24-hour format.
 
+### `isDST(timeZone: String): Boolean`
+
+Returns a boolean if provided timezone is in Daylight savings time. **_Note:_** Will also return false if the timezone doesn't participate in DST
+
+- `timezone`: The timezone identifier (e.g., "Europe/Berlin").
+
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.

@@ -38,4 +38,12 @@ describe("isDST", () => {
 
     expect(isDST("Australia/Sydney")).toBe(false);
   });
+
+  test("returns false if timezone does not observe DST", () => {
+    // Set the current date to a date when DST is typically active (e.g., July for UTC)
+    const mockDate = new Date("2024-07-01T00:00:00");
+    jest.setSystemTime(mockDate);
+
+    expect(isDST("America/Paramaribo")).toBe(false);
+  });
 });

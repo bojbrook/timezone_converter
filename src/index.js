@@ -65,6 +65,14 @@ function getOffsetFromDate(date, timeZone) {
 }
 
 function isDST(timeZone) {
+  // Check if the timezone has DST
+  if (
+    !TIMEZONES[timeZone] ||
+    TIMEZONES[timeZone].daylight_saving_time === "N/A"
+  ) {
+    return false;
+  }
+
   const isSouthernHemisphere = TIMEZONES[timeZone].hemisphere === "Southern";
   const currentDate = new Date();
 
