@@ -1,21 +1,4 @@
-const TIMEZONES = require("../data/timezones");
 const { isDST } = require("../index");
-
-// // Mock implementation of getOffsetFromDate
-// const getOffsetFromDate = jest.fn((date, timeZone) => {
-//   // Mock offsets based on the month and timezone
-//   const month = date.getMonth();
-
-//   // Example offsets: New York is in DST from March to November, Sydney from October to March
-//   if (timeZone === "America/New_York") {
-//     return month >= 3 && month <= 10 ? -4 : -5; // DST in summer, standard in winter
-//   } else if (timeZone === "Australia/Sydney") {
-//     return month >= 9 || month <= 2 ? 11 : 10; // DST in summer, standard in winter
-//   } else if (timeZone === "Europe/London") {
-//     return month >= 3 && month <= 9 ? 1 : 0; // DST in summer, standard in winter
-//   }
-//   return 0;
-// });
 
 describe("isDST", () => {
   beforeEach(() => {
