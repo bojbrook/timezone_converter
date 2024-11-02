@@ -81,6 +81,10 @@ Returns a boolean if provided timezone is in Daylight savings time. **_Note:_** 
 
 - `timezone`: The timezone identifier (e.g., "Europe/Berlin").
 
+## Troubleshooting
+
+Enable debug logging with `TZ_DEBUG=true`.
+
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
