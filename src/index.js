@@ -1,22 +1,26 @@
 "use strict";
-const { log } = require("winston");
+
 const TIMEZONES = require("./data/timezones");
 const logger = require("./helpers/logging");
+const getUTCOffset = require("./getUtcOffset");
+const isDST = require("./isDST");
 
-function getUTCOffset(timezoneName, isDST = false) {
-  const timezone = TIMEZONES[timezoneName];
-  if (!timezone) {
-    logger.debug(`Timezone not found: ${timezoneName}`);
-    return "Timezone not found";
-  }
-  const result = isDST
-    ? timezone["daylight_saving_time"]
-    : timezone["standard_time"];
-  logger.debug(`UTC offset for ${timezoneName} is ${result}`);
-  // remove the "UTC" prefix
-  return result.substring(3);
-}
+// Get the UTC offset for a specific timezone
+// function getUTCOffset(timezoneName, isDST = false) {
+//   const timezone = TIMEZONES[timezoneName];
+//   if (!timezone) {
+//     logger.debug(`Timezone not found: ${timezoneName}`);
+//     return "Timezone not found";
+//   }
+//   const result = isDST
+//     ? timezone["daylight_saving_time"]
+//     : timezone["standard_time"];
+//   logger.debug(`UTC offset for ${timezoneName} is ${result}`);
+//   // remove the "UTC" prefix
+//   return parseInt(result.substring(3));
+// }
 
+// Get the current time in a specific timezone based on the UTC offset
 function getCurrentTimeFromOffset(offset) {
   logger.debug(`getCurrentTimeFromOffset() -  ${offset}`);
   const date = new Date();
@@ -31,6 +35,7 @@ function getCurrentTimeFromOffset(offset) {
   return offsetDate;
 }
 
+// Get the current time in a specific timezone
 function getCurrentTimeFromTimezone(timezoneName, isDST = false) {
   logger.debug(
     `getCurrentTimeFromTimezone() - ${timezoneName} - Daylight Savings: ${isDST}`
@@ -49,6 +54,44 @@ function getTimeZonesByContinent(continent) {
   );
   logger.debug(`Timezones in ${continent}: ${filteredTimezones}`);
   return filteredTimezones;
+}
+
+/**
+ * Compares the UTC offsets of two timezones and returns the difference.
+ *
+ * This function takes two timezone identifiers, checks if they are valid,
+ * determines if they are observing Daylight Saving Time (DST), and then
+ * calculates their respective UTC offsets. It returns the difference
+ * between the two offsets.
+ *
+ * @param {string} timezone1 - The first timezone identifier.
+ * @param {string} timezone2 - The second timezone identifier.
+ * @returns {number|string} The difference in UTC offsets between the two timezones,
+ * or "Timezone not found" if either timezone is invalid.
+ */
+function compareTimezones(timezone1, timezone2) {
+  logger.debug(`compareTimezones(): ${timezone1} - ${timezone2}`);
+
+  if (
+    TIMEZONES[timezone1] === undefined ||
+    TIMEZONES[timezone2] === undefined
+  ) {
+    logger.debug("Timezone not found");
+    return "Timezone not found";
+  }
+
+  const timezone1IsDST = isDST(timezone1);
+  const timezone2IsDST = isDST(timezone2);
+
+  const offset1 = getUTCOffset(timezone1, timezone1IsDST);
+  const offset2 = getUTCOffset(timezone2, timezone2IsDST);
+
+  if (offset1 === "Timezone not found" || offset2 === "Timezone not found") {
+    logger.debug("Timezone not found", offset1, offset2);
+    return "Timezone not found";
+  }
+
+  return offset1 - offset2;
 }
 
 function formatTimeString(time, is24Hours = false) {
@@ -77,49 +120,51 @@ function getOffsetFromDate(date, timeZone) {
   return offset;
 }
 
-function isDST(timeZone) {
-  logger.debug(`isDST() - ${timeZone}`);
-  // Check if the timezone has DST
-  if (
-    !TIMEZONES[timeZone] ||
-    TIMEZONES[timeZone].daylight_saving_time === "N/A"
-  ) {
-    return false;
-  }
+// function isDST(timeZone) {
+//   logger.debug(`isDST() - ${timeZone}`);
+//   // Check if the timezone has DST
+//   if (
+//     !TIMEZONES[timeZone] ||
+//     TIMEZONES[timeZone].daylight_saving_time === "N/A"
+//   ) {
+//     return false;
+//   }
 
-  const isSouthernHemisphere = TIMEZONES[timeZone].hemisphere === "Southern";
-  logger.debug(
-    `Is ${timeZone} in the Southern Hemisphere? ${isSouthernHemisphere}`
-  );
-  const currentDate = new Date();
+//   const isSouthernHemisphere = TIMEZONES[timeZone].hemisphere === "Southern";
+//   logger.debug(
+//     `Is ${timeZone} in the Southern Hemisphere? ${isSouthernHemisphere}`
+//   );
+//   const currentDate = new Date();
 
-  const januaryOffset = getOffsetFromDate(
-    new Date(currentDate.getFullYear(), 0, 1),
-    timeZone
-  );
-  logger.debug(`January offset: ${januaryOffset}`);
+//   const januaryOffset = getOffsetFromDate(
+//     new Date(currentDate.getFullYear(), 0, 1),
+//     timeZone
+//   );
+//   logger.debug(`January offset: ${januaryOffset}`);
 
-  const julyOffset = getOffsetFromDate(
-    new Date(currentDate.getFullYear(), 6, 1),
-    timeZone
-  );
-  logger.debug(`July offset: ${julyOffset}`);
-  const currentOffset = getOffsetFromDate(currentDate, timeZone);
-  logger.debug(`Current offset: ${currentOffset}`);
+//   const julyOffset = getOffsetFromDate(
+//     new Date(currentDate.getFullYear(), 6, 1),
+//     timeZone
+//   );
+//   logger.debug(`July offset: ${julyOffset}`);
+//   const currentOffset = getOffsetFromDate(currentDate, timeZone);
+//   logger.debug(`Current offset: ${currentOffset}`);
 
-  if (isSouthernHemisphere) {
-    return currentOffset === januaryOffset;
-  } else {
-    return currentOffset === julyOffset;
-  }
-}
+//   if (isSouthernHemisphere) {
+//     return currentOffset === januaryOffset;
+//   } else {
+//     return currentOffset === julyOffset;
+//   }
+// }
 
 module.exports = {
   getCurrentTimeFromTimezone,
-  getUTCOffset,
   getTimeZonesByContinent,
   getCurrentTimeFromOffset,
   formatTimeString,
   getTimeZones,
+  compareTimezones,
   isDST,
+  getUTCOffset,
+  getOffsetFromDate,
 };

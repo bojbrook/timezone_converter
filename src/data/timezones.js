@@ -1732,7 +1732,7 @@ const TIMEZONES = [
     },
     "Pacific/Apia": {
       standard_time: "UTC+13",
-      daylight_saving_time: "UTC+14",
+      daylight_saving_time: "N/A",
       hemisphere: "Southern",
     },
     "Africa/Johannesburg": {

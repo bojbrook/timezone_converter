@@ -1,4 +1,4 @@
-const { isDST } = require("../index");
+const isDST = require("../isDST");
 
 describe("isDST", () => {
   beforeEach(() => {
